@@ -81,31 +81,25 @@ public class UserDao {
         }
     }
 
-    public User[] findAll() {
-        try (Connection connection = DbUtil.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(READ_ALL_USERS);
-            User[] users = new User[0];
-            ResultSet resultSet = statement.executeQuery();
+    public void findAll() {
+        String[]columnNames = new String[]{"id","username","email","password"};
+        try (PreparedStatement statement = DbUtil.getConnection().prepareStatement(READ_ALL_USERS);
+             ResultSet resultSet = statement.executeQuery();) {
             while (resultSet.next()) {
-                User user = new User();
-                user.setId(resultSet.getInt("id"));
-                user.setUserName(resultSet.getString("username"));
-                user.setEmail(resultSet.getString("email"));
-                user.setPassword(resultSet.getString("password"));
-                users = addToArray(user, users);
+                for (String param : columnNames) {
+                    System.out.println(resultSet.getString(param));
+                }
             }
-            return users;
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
     }
 
-    private User[] addToArray(User u, User[] users) {
+/*    private User[] addToArray(User u, User[] users) {
         User[] tmpUsers = Arrays.copyOf(users, users.length + 1);
         tmpUsers[users.length] = u;
         return tmpUsers;
-    }
+    }*/
 
     public String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
