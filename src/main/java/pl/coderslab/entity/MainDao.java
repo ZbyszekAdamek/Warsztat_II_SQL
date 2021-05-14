@@ -2,25 +2,19 @@ package pl.coderslab.entity;
 
 public class MainDao {
     public static void main(String[] args) {
-        UserDao userDao = new UserDao();
-        User user = new User();
-        user.setUserName("arek");
-        user.setEmail("arkadiusz.jozwiak@coderslab.pl");
-        user.setPassword("pass");
-        userDao.create(user);
 
-        User read = userDao.read(15);
+        UserDao userDao1 = new UserDao();
+/*        User user1 = new User();
+        user1.setUserName("Zbyszek");
+        user1.setEmail("zbiq.wassup@gmail.com");
+        user1.setPassword("testowo");
+        userDao1.create(user1);*/
+        User read = userDao1.read(24);
         System.out.println(read);
-        User secondUser = new User();
-        secondUser.setUserName("marek");
-        secondUser.setEmail("marek@coderslab.pl");
-        secondUser.setPassword("pass");
-        userDao.create(secondUser);
-        User[] all = userDao.findAll();
+        User[] all = userDao1.findAll();
         for (User u : all) {
             System.out.println(u);
-            userDao.delete(1);
-            userDao.delete(2);
+
         }
     }
 }
